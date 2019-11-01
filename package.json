@@ -20,8 +20,8 @@
     "clean": "rimraf ./dist/*",
     "lint-staged": "lint-staged",
     "lint:js": "eslint --fix --cache --ext '.js,.jsx' --format=pretty src",
-    "lint:prettier": "prettier -c --write './src/**/*.*(js|jsx|json|less|scss|css)'",
-    "lint:style": "stylelint --fix 'src/**/*.scss' --syntax scss",
+    "lint:prettier": "prettier -c --write \"**/*\"",
+    "lint:style": "stylelint --fix 'src/**/*.less' --syntax less",
     "release": "standard-version",
     "test": "jest --color",
     "test:watch": "jest --color --watchAll"
@@ -36,18 +36,16 @@
   },
   "lint-staged": {
     "src/**/*.{css,less,scss}": [
-      "stylelint --fix --syntax scss",
-      "prettier --write",
+      "npm run lint:style",
       "git add"
     ],
     "src/**/*.{json,html,css,less,scss,md,yaml,yml}": [
-      "prettier --write",
+      "npm run lint:prettier",
       "git add"
     ],
     "src/**/*.{js,jsx}": [
       "yarn run lint:js",
       "import-sort --write",
-      "prettier --write",
       "git add"
     ]
   },
