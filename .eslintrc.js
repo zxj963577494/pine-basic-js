@@ -1,15 +1,12 @@
+const fs = require('fs');
+const path = require('path');
+
+const prettierOptions = JSON.parse(fs.readFileSync(path.resolve(__dirname, '.prettierrc'), 'utf8'));
+
 module.exports = {
   parser: 'babel-eslint',
-  extends: [
-    'airbnb',
-    'eslint:recommended',
-    'plugin:eslint-comments/recommended',
-    'plugin:react/recommended',
-    'plugin:prettier/recommended',
-    'prettier/react',
-    'plugin:jest/recommended',
-  ],
-  plugins: ['react', 'react-hooks', 'jsx-a11y', 'jest', 'eslint-comments', 'prettier'],
+  extends: ['airbnb', 'prettier', 'prettier/react', 'plugin:jest/recommended'],
+  plugins: ['prettier', 'react', 'react-hooks', 'jsx-a11y'],
   env: {
     browser: true,
     node: true,
@@ -17,7 +14,6 @@ module.exports = {
     jest: true,
   },
   parserOptions: {
-    ecmaVersion: 6,
     ecmaFeatures: {
       experimentalObjectRestSpread: true,
       jsx: true,
@@ -29,60 +25,97 @@ module.exports = {
     sourceType: 'module',
   },
   rules: {
-    'prettier/prettier': 2,
-    'react/jsx-wrap-multilines': 0,
-    'react/prop-types': 0,
-    'react/forbid-prop-types': 0,
-    'react/jsx-one-expression-per-line': 0,
-    'generator-star-spacing': 0,
-    'function-paren-newline': 0,
+    'prettier/prettier': ['error', prettierOptions],
+    camelcase: 0,
+    'consistent-return': 0,
+    'import/extensions': 0,
+    'import/imports-first': 0,
+    'import/newline-after-import': 0,
+    'import/no-cycle': 0,
+    'import/no-extraneous-dependencies': ['error', { devDependencies: true }],
+    'import/no-named-as-default': 0,
     'import/no-unresolved': [2, { ignore: ['^@/'] }],
-    'import/order': 'warn',
-    'import/no-extraneous-dependencies': [
-      2,
-      {
-        optionalDependencies: true,
-        devDependencies: [
-          '**/tests/**.{ts,js,jsx,tsx}',
-          '**/_test_/**.{ts,js,jsx,tsx}',
-          '/mock/**/**.{ts,js,jsx,tsx}',
-          '**/**.test.{ts,js,jsx,tsx}',
-          '**/_mock.{ts,js,jsx,tsx}',
-          '**/example/**.{ts,js,jsx,tsx}',
-          '**/examples/**.{ts,js,jsx,tsx}',
-        ],
-      },
-    ],
+    'import/prefer-default-export': 0,
+    'linebreak-style': 0,
     'jsx-a11y/no-noninteractive-element-interactions': 0,
     'jsx-a11y/click-events-have-key-events': 0,
     'jsx-a11y/no-static-element-interactions': 0,
     'jsx-a11y/anchor-is-valid': 0,
-    'linebreak-style': 0,
-    // Too restrictive, writing ugly code to defend against a very unlikely scenario: https://eslint.org/docs/rules/no-prototype-builtins
-    'no-prototype-builtins': 'off',
-    'import/prefer-default-export': 'off',
-    'import/no-default-export': [0, 'camel-case'],
-    // Too restrictive: https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/destructuring-assignment.md
-    'react/destructuring-assignment': 'off',
-    'react/jsx-filename-extension': 'off',
-    // Use function hoisting to improve code readability
-    'no-use-before-define': ['error', { functions: false, classes: true, variables: true }],
-    // Common abbreviations are known and readable
-    'import/no-cycle': 0,
-    'react-hooks/rules-of-hooks': 'error', // Checks rules of Hooks
-    // issue https://github.com/facebook/react/issues/15204
-    'react-hooks/exhaustive-deps': 'off', // Checks effect dependencies
-    // Conflict with prettier
-    'arrow-body-style': ['error', 'as-needed'],
-    'arrow-parens': 1,
-    'object-curly-newline': 0,
-    'implicit-arrow-linebreak': 0,
-    'operator-linebreak': 0,
-    'eslint-comments/no-unlimited-disable': 1,
-    'no-param-reassign': 1,
-    'space-before-function-paren': 0,
+    'jsx-a11y/media-has-caption': 0,
+    'jsx-a11y/alt-text': 0,
+    'no-alert': 1,
+    'no-console': 1,
+    'no-nested-ternary': 0,
+    'no-param-reassign': ['error', { props: false }],
+    'prefer-template': 0,
+    'react/forbid-prop-types': 0,
+    'react/jsx-one-expression-per-line': 0,
+    'react/jsx-key': 2,
+    'react/jsx-filename-extension': 0,
+    'react/jsx-props-no-spreading': 0,
+    'react/jsx-wrap-multilines': 0,
+    'react/no-danger': 0,
+    'react/no-array-index-key': 1,
+    'react/prop-types': 0,
+    'react/state-in-constructor': 0,
+    'react/static-property-placement': 0,
+    'react/sort-comp': [
+      1,
+      {
+        order: ['lifecycle', '/^handle.+$/', 'everything-else', 'rendering'],
+        groups: {
+          lifecycle: [
+            'displayName',
+            'propTypes',
+            'contextTypes',
+            'childContextTypes',
+            'mixins',
+            'statics',
+            'defaultProps',
+            'static-variables',
+            'constructor',
+            'getDefaultProps',
+            'state',
+            'getInitialState',
+            'getChildContext',
+            'instance-variables',
+            'getDerivedStateFromProps',
+            'componentWillMount',
+            'UNSAFE_componentWillMount',
+            'componentDidMount',
+            'componentWillReceiveProps',
+            'UNSAFE_componentWillReceiveProps',
+            'shouldComponentUpdate',
+            'componentWillUpdate',
+            'UNSAFE_componentWillUpdate',
+            'getSnapshotBeforeUpdate',
+            'componentDidUpdate',
+            'componentDidCatch',
+            'componentWillUnmount',
+          ],
+          rendering: ['/^render.+$/', 'render'],
+        },
+      },
+    ],
   },
+  overrides: [
+    {
+      files: ['*.test.js', '*.test.ts', '*.test.jsx', '*.test.tsx'],
+      env: {
+        jest: true, // now **/*.test.js files' env has both es6 *and* jest
+      },
+      plugins: ['jest'],
+      rules: {
+        'jest/no-disabled-tests': 'warn',
+        'jest/no-focused-tests': 'error',
+        'jest/no-identical-title': 'error',
+        'jest/prefer-to-have-length': 'warn',
+        'jest/valid-expect': 'error',
+      },
+    },
+  ],
   settings: {
-    polyfills: ['fetch', 'Promise', 'URL', 'object-assign'],
+    'import/resolver': { node: { extensions: ['.js', '.jsx', '.ts', '.tsx'] } },
+    polyfills: ['fetch', 'Promise', 'promises', 'url', 'object-assign'],
   },
 };
