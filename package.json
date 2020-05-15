@@ -157,6 +157,7 @@
     "node-sass": "^4.12.0",
     "postcss-import": "^12.0.1",
     "postcss-loader": "^3.0.0",
+    "postcss-plugin-px2rem": "^0.8.1",
     "postcss-preset-env": "^6.6.0",
     "postcss-url": "^8.0.0",
     "prettier": "^1.17.0",
@@ -185,5 +186,9 @@
   },
   "engines": {
     "node": ">=8.0.0"
+  },
+  "resolutions": {
+    "browserslist": "4.7.0",
+    "caniuse-lite": "1.0.30000999"
   }
 }
