@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.5](https://github.com/zxj963577494/pine-basic-js/compare/v1.1.4...v1.1.5) (2021-07-22)
+
+
+### Bug Fixes
+
+* 更新配置 ([6ffadfb](https://github.com/zxj963577494/pine-basic-js/commit/6ffadfbf1fc093ceef824b62f5f6dbecc727f809))
+
 ### [1.1.4](https://github.com/zxj963577494/pine-basic-js/compare/v1.1.3...v1.1.4) (2021-07-22)
 
 
